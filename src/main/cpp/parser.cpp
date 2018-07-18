@@ -1,4 +1,3 @@
-#include <string.h>
 #include "parser.hpp"
 
 regex_parser::Parser::Parser() {

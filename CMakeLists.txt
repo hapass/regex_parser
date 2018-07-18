@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.10.0)
 
 project(regex_parser VERSION 0.1.0)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 #dependencies
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
 
@@ -16,6 +19,8 @@ add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src" "${CMAKE_BINARY_DIR}/googl
 add_library(regex_parser_lib
     src/main/cpp/parser.hpp
     src/main/cpp/parser.cpp
+    src/main/cpp/arguments_parser.hpp
+    src/main/cpp/arguments_parser.cpp
 )
 target_include_directories(regex_parser_lib PUBLIC src/main/cpp)
 
