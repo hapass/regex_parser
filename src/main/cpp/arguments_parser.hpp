@@ -15,6 +15,7 @@ namespace regex_parser {
         public:
             std::string description;
             std::string value;
+            bool hasValue;
             ArgumentType type;
     };
 
@@ -28,7 +29,8 @@ namespace regex_parser {
             ArgumentsParser* configureArgument(std::string name, ArgumentDescription description);
             ArgumentsParser* parse(int argumentCount, char const* arguments[]);
 
-            std::string getValue();
+            std::string getValue(std::string name);
+            bool hasFlag(std::string name);
             std::string getHelp();
     };
 }

@@ -9,7 +9,6 @@ using namespace regex_parser;
 
 TEST(ArgumentsParser, getHelp) {
     auto parser = std::make_unique<ArgumentsParser>();
-    char const* arguments[] = { "-fa", "first_argument_value", "-fs", "second_argument_value" };
 
     ArgumentDescription firstDescription;
     firstDescription.description = "first_argument";
@@ -32,4 +31,26 @@ TEST(ArgumentsParser, getHelp) {
         << "    " << "-fs [1]" << " -> " << "second_argument" << "\n";
 
     EXPECT_EQ(help, outStream.str());
+}
+
+TEST(ArgumentsParser, getValue) {
+    auto parser = std::make_unique<ArgumentsParser>();
+    char const* arguments[] = { "-h", "-r", "regex" };
+
+    ArgumentDescription helpDescription;
+    helpDescription.description = "Help.";
+    helpDescription.type = Flag;
+
+    ArgumentDescription regexDescription;
+    regexDescription.description = "Regex.";
+    regexDescription.type = String;
+
+    parser
+        ->configureArgument("-h", helpDescription)
+        ->configureArgument("-r", regexDescription);
+
+    parser->parse(3, arguments);
+
+    EXPECT_EQ(parser->hasFlag("-h"), true);
+    EXPECT_EQ(parser->getValue("-r"), "regex");
 }
