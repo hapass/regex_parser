@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string.h>
 #include "gtest/gtest.h"
 #include "arguments_parser.hpp"
