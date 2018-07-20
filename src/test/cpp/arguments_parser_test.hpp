@@ -8,8 +8,6 @@
 using namespace regex_parser;
 
 TEST(ArgumentsParser, getHelp) {
-    auto parser = std::make_unique<ArgumentsParser>();
-
     ArgumentDescription firstDescription;
     firstDescription.description = "first_argument";
     firstDescription.type = Path;
@@ -18,6 +16,7 @@ TEST(ArgumentsParser, getHelp) {
     secondDescription.description = "second_argument";
     secondDescription.type = Number;
 
+    auto parser = std::make_unique<ArgumentsParser>();
     std::string help = parser
         ->configureArgument("-fa", firstDescription)
         ->configureArgument("-fs", secondDescription)
@@ -34,9 +33,6 @@ TEST(ArgumentsParser, getHelp) {
 }
 
 TEST(ArgumentsParser, getValue) {
-    auto parser = std::make_unique<ArgumentsParser>();
-    char const* arguments[] = { "-h", "-r", "regex" };
-
     ArgumentDescription helpDescription;
     helpDescription.description = "Help.";
     helpDescription.type = Flag;
@@ -45,12 +41,20 @@ TEST(ArgumentsParser, getValue) {
     regexDescription.description = "Regex.";
     regexDescription.type = String;
 
+    auto parser = std::make_unique<ArgumentsParser>();
     parser
         ->configureArgument("-h", helpDescription)
         ->configureArgument("-r", regexDescription);
 
+    char const* arguments[] = { "-h", "-r", "regex" };
     parser->parse(3, arguments);
 
     EXPECT_EQ(parser->hasFlag("-h"), true);
+    EXPECT_EQ(parser->getValue("-h"), "");
+
+    EXPECT_EQ(parser->hasFlag("-r"), true);
     EXPECT_EQ(parser->getValue("-r"), "regex");
+
+    EXPECT_EQ(parser->hasFlag("--help"), false);
+    EXPECT_EQ(parser->getValue("--help"), "");
 }
