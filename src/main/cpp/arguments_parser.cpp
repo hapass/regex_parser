@@ -1,6 +1,8 @@
 #include <string>
 #include <sstream>
 #include "arguments_parser.hpp"
+#include "argument_type.hpp"
+#include "argument_description.hpp"
 
 using namespace regex_parser;
 
@@ -22,7 +24,7 @@ ArgumentsParser* ArgumentsParser::parse(int argumentCount, char const* arguments
             continue;
         }
 
-        if(_map.count(argument) == 1) {
+        if(isArgumentConfigured(argument)) {
             if(_map[argument].type == Flag) {
                 _map[argument].hasValue = true;
                 continue;
@@ -35,22 +37,32 @@ ArgumentsParser* ArgumentsParser::parse(int argumentCount, char const* arguments
     return this;
 }
 
-ArgumentsParser* ArgumentsParser::configureArgument(std::string name, ArgumentDescription description) {
-    description.hasValue = false;
-    description.value = "";
-    _map[name] = description;
+ArgumentsParser* ArgumentsParser::configureArgument(ArgumentDescription description) {
+    if(description.name == "") {
+        throw std::invalid_argument("Description must contain a flag name.");
+    }
+    _map[description.name] = description;
     return this;
 }
 
-std::string ArgumentsParser::getValue(std::string name) {
-    if(_map.count(name) != 1) {
-        return "";
+std::string ArgumentsParser::getArgumentValue(std::string name) {
+    if(!isArgumentConfigured(name)) {
+        throw std::invalid_argument("There is no configured argument by this name: " + name + ".");
     }
+
+    if(_map[name].type == Flag) {
+        throw std::invalid_argument("This argument is a flag and has no value: " + name + ".");
+    }
+
     return _map[name].value;
 }
 
-bool ArgumentsParser::hasFlag(std::string name) {
-    return _map.count(name) == 1 && _map[name].hasValue;
+bool ArgumentsParser::hasArgument(std::string name) {
+    return isArgumentConfigured(name) && _map[name].hasValue;
+}
+
+bool ArgumentsParser::isArgumentConfigured(std::string name) {
+    return _map.count(name) == 1;
 }
 
 std::string ArgumentsParser::getHelp() {
@@ -60,10 +72,17 @@ std::string ArgumentsParser::getHelp() {
 
     for (std::pair<std::string, ArgumentDescription> element : _map) {
         help
-            << "    " << element.first << " "
-            << "[" << element.second.type << "]" 
+            << "    " << element.second.name << getValueHelp(element.second.type)
             << " -> " << element.second.description << "\n";
     }
 
     return help.str();
+}
+
+std::string ArgumentsParser::getValueHelp(ArgumentType type) {
+    if(type == String) {
+        return " [string]";
+    }
+
+    return "";
 }

@@ -7,16 +7,18 @@ int main(int argumentCount, char* arguments[]) {
     auto argumentsParser = std::make_unique<ArgumentsParser>();
 
     ArgumentDescription helpDescription;
+    helpDescription.name = "-h";
     helpDescription.description = "Prints help.";
     helpDescription.type = Flag;
 
-    argumentsParser->configureArgument("-h", helpDescription);
+    argumentsParser->configureArgument(helpDescription);
 
     ArgumentDescription regexOption;
+    regexOption.name = "-r";
     regexOption.description = "Regular expression.";
     regexOption.type = String;
 
-    argumentsParser->configureArgument("-r", regexOption);
+    argumentsParser->configureArgument(regexOption);
 
     std::cout << argumentsParser->getHelp();
 }
