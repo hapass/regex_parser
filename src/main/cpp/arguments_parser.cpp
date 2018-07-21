@@ -6,7 +6,9 @@
 
 using namespace regex_parser;
 
-ArgumentsParser::ArgumentsParser() {}
+ArgumentsParser::ArgumentsParser() {
+    _argumentCount = 0;
+}
 
 ArgumentsParser::~ArgumentsParser() {}
 
@@ -25,6 +27,8 @@ ArgumentsParser* ArgumentsParser::parse(int argumentCount, char const* arguments
         }
 
         if(isArgumentConfigured(argument)) {
+            _argumentCount++;
+
             if(_map[argument].type == Flag) {
                 _map[argument].hasValue = true;
                 continue;
@@ -63,6 +67,10 @@ bool ArgumentsParser::hasArgument(std::string name) {
 
 bool ArgumentsParser::isArgumentConfigured(std::string name) {
     return _map.count(name) == 1;
+}
+
+int ArgumentsParser::getArgumentCount() {
+    return _argumentCount;
 }
 
 std::string ArgumentsParser::getHelp() {

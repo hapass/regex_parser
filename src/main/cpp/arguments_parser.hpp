@@ -8,6 +8,7 @@
 namespace regex_parser {
     class ArgumentsParser {
         private:
+            int _argumentCount;
             std::map<std::string, ArgumentDescription> _map;
             std::string getValueHelp(ArgumentType type);
         public:
@@ -20,6 +21,8 @@ namespace regex_parser {
             std::string getArgumentValue(std::string name);
             bool hasArgument(std::string name);
             bool isArgumentConfigured(std::string name);
+
+            int getArgumentCount();
 
             std::string getHelp();
     };

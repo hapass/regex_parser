@@ -160,4 +160,5 @@ TEST(ArgumentsParser, arguments_parser_recognizes_multiple_arguments) {
     EXPECT_EQ(parser->hasArgument("-h"), true);
     EXPECT_EQ(parser->getArgumentValue("-r"), "regex");
     EXPECT_EQ(parser->getArgumentValue("-v"), "value");
+    EXPECT_EQ(parser->getArgumentCount(), 3);
 }
