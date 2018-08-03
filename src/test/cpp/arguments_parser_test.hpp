@@ -9,7 +9,7 @@
 
 using namespace regex_parser;
 
-TEST(ArgumentsParser, get_help_formats_help_properly) {
+std::shared_ptr<ArgumentsParser> createHelpParser() {
     ArgumentDescription helpDescription;
     helpDescription.name = "-h";
     helpDescription.description = "Help.";
@@ -25,12 +25,18 @@ TEST(ArgumentsParser, get_help_formats_help_properly) {
     valueDescription.description = "String to match.";
     valueDescription.type = String;
 
-    auto parser = std::make_unique<ArgumentsParser>();
-    std::string help = parser
+    auto parser = std::make_shared<ArgumentsParser>();
+    parser
         ->configureArgument(helpDescription)
         ->configureArgument(regexDescription)
-        ->configureArgument(valueDescription)
-        ->getHelp();
+        ->configureArgument(valueDescription);
+
+    return parser;
+}
+
+TEST(ArgumentsParser, get_help_formats_help_properly) {
+    auto parser = createHelpParser();
+    std::string help = parser->getHelp();
 
     std::stringstream outStream;
 
@@ -44,13 +50,7 @@ TEST(ArgumentsParser, get_help_formats_help_properly) {
 }
 
 TEST(ArgumentsParser, get_flag_value_throws_argument_exception) {
-    ArgumentDescription helpDescription;
-    helpDescription.name = "-h";
-    helpDescription.description = "Help.";
-    helpDescription.type = Flag;
-
-    auto parser = std::make_unique<ArgumentsParser>();
-    parser->configureArgument(helpDescription);
+    auto parser = createHelpParser();
 
     char const* arguments[] = { "-h" };
     parser->parse(1, arguments);
@@ -66,13 +66,7 @@ TEST(ArgumentsParser, get_flag_value_throws_argument_exception) {
 }
 
 TEST(ArgumentsParser, has_argument_returns_true_if_has_argument) {
-    ArgumentDescription helpDescription;
-    helpDescription.name = "-h";
-    helpDescription.description = "Help.";
-    helpDescription.type = Flag;
-
-    auto parser = std::make_unique<ArgumentsParser>();
-    parser->configureArgument(helpDescription);
+    auto parser = createHelpParser();
 
     char const* arguments[] = { "-h" };
     parser->parse(1, arguments);
@@ -81,13 +75,7 @@ TEST(ArgumentsParser, has_argument_returns_true_if_has_argument) {
 }
 
 TEST(ArgumentsParser, has_argument_returns_false_if_no_such_argument_configured) {
-    ArgumentDescription helpDescription;
-    helpDescription.name = "-h";
-    helpDescription.description = "Help.";
-    helpDescription.type = Flag;
-
-    auto parser = std::make_unique<ArgumentsParser>();
-    parser->configureArgument(helpDescription);
+    auto parser = createHelpParser();
 
     char const* arguments[] = { "-h" };
     parser->parse(1, arguments);
@@ -96,13 +84,7 @@ TEST(ArgumentsParser, has_argument_returns_false_if_no_such_argument_configured)
 }
 
 TEST(ArgumentsParser, get_argument_throws_exception_if_no_such_argument_configured) {
-    ArgumentDescription helpDescription;
-    helpDescription.name = "-h";
-    helpDescription.description = "Help.";
-    helpDescription.type = Flag;
-
-    auto parser = std::make_unique<ArgumentsParser>();
-    parser->configureArgument(helpDescription);
+    auto parser = createHelpParser();
 
     char const* arguments[] = { "-h" };
     parser->parse(1, arguments);
@@ -118,13 +100,7 @@ TEST(ArgumentsParser, get_argument_throws_exception_if_no_such_argument_configur
 }
 
 TEST(ArgumentsParser, get_string_value_returns_value) {
-    ArgumentDescription regexDescription;
-    regexDescription.name = "-r";
-    regexDescription.description = "Regex.";
-    regexDescription.type = String;
-
-    auto parser = std::make_unique<ArgumentsParser>();
-    parser->configureArgument(regexDescription);
+    auto parser = createHelpParser();
 
     char const* arguments[] = { "-r", "regex" };
     parser->parse(2, arguments);
@@ -133,26 +109,7 @@ TEST(ArgumentsParser, get_string_value_returns_value) {
 }
 
 TEST(ArgumentsParser, arguments_parser_recognizes_multiple_arguments) {
-    ArgumentDescription helpDescription;
-    helpDescription.name = "-h";
-    helpDescription.description = "Help.";
-    helpDescription.type = Flag;
-
-    ArgumentDescription regexDescription;
-    regexDescription.name = "-r";
-    regexDescription.description = "Regex.";
-    regexDescription.type = String;
-
-    ArgumentDescription valueDescription;
-    valueDescription.name = "-v";
-    valueDescription.description = "String to match.";
-    valueDescription.type = String;
-
-    auto parser = std::make_unique<ArgumentsParser>();
-    parser
-        ->configureArgument(helpDescription)
-        ->configureArgument(regexDescription)
-        ->configureArgument(valueDescription);
+    auto parser = createHelpParser();
 
     char const* arguments[] = { "-r", "regex", "-h", "-v", "value" };
     parser->parse(5, arguments);
