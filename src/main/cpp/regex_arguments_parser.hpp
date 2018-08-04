@@ -13,7 +13,6 @@ namespace regex_parser {
             static const std::string VALUE_ARGUMENT;
 
             RegexArgumentsParser(int argumentCount, char const* arguments[]);
-            ~RegexArgumentsParser();
 
             RegexArgumentsState getState();
             std::string getRegex();

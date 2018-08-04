@@ -31,8 +31,6 @@ RegexArgumentsParser::RegexArgumentsParser(int argumentCount, char const* argume
     _argumentsParser->parse(argumentCount, arguments);
 }
 
-RegexArgumentsParser::~RegexArgumentsParser() {}
-
 RegexArgumentsState RegexArgumentsParser::getState() {
     if(_argumentsParser->getArgumentCount() == 2 &&
         _argumentsParser->hasArgument(VALUE_ARGUMENT) &&

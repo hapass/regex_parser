@@ -28,9 +28,17 @@ target_link_libraries(regex_parser regex_parser_lib)
 
 #tests
 include(GoogleTest)
+include(CTest)
 
-add_executable (test
+add_executable (test_regex
     src/test/cpp/test.cpp
 )
-target_link_libraries(test gtest_main regex_parser_lib)
-target_include_directories(test PUBLIC src/main/cpp)
+
+target_link_libraries(test_regex gtest_main regex_parser_lib)
+target_include_directories(test_regex PUBLIC src/main/cpp)
+
+gtest_discover_tests(test_regex)
+
+add_custom_target(test_memcheck
+    COMMAND ${CMAKE_CTEST_COMMAND} -T memcheck -S
+)

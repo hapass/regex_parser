@@ -13,7 +13,6 @@ namespace regex_parser {
             std::string getValueHelp(ArgumentType type);
         public:
             ArgumentsParser();
-            ~ArgumentsParser();
 
             ArgumentsParser* configureArgument(ArgumentDescription description);
             ArgumentsParser* parse(int argumentCount, char const* arguments[]);

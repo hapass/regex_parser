@@ -10,8 +10,6 @@ ArgumentsParser::ArgumentsParser() {
     _argumentCount = 0;
 }
 
-ArgumentsParser::~ArgumentsParser() {}
-
 ArgumentsParser* ArgumentsParser::parse(int argumentCount, char const* arguments[]) {
     bool isArgumentValue = false;
 
