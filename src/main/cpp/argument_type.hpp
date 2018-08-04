@@ -1,6 +1,5 @@
 #pragma once
 
-enum ArgumentType {
-    String,
-    Flag
-};
+namespace regex_parser {
+    enum ArgumentType { String, Flag };
+}

@@ -41,10 +41,10 @@ TEST(ArgumentsParser, get_help_formats_help_properly) {
     std::stringstream outStream;
 
     outStream
-        << "Program accepts following arguments:" << "\n"
-        << "    " << "-h" << " -> " << "Help." << "\n"
-        << "    " << "-r [string]" << " -> " << "Regex." << "\n"
-        << "    " << "-v [string]" << " -> " << "String to match." << "\n";
+        << "Program accepts following arguments:" << std::endl
+        << "    " << "-h" << " -> " << "Help." << std::endl
+        << "    " << "-r [string]" << " -> " << "Regex." << std::endl
+        << "    " << "-v [string]" << " -> " << "String to match." << std::endl;
 
     EXPECT_EQ(help, outStream.str());
 }

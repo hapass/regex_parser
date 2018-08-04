@@ -76,12 +76,12 @@ int ArgumentsParser::getArgumentCount() {
 std::string ArgumentsParser::getHelp() {
     std::stringstream help;
 
-    help << "Program accepts following arguments:" << "\n";
+    help << "Program accepts following arguments:" << std::endl;
 
     for (std::pair<std::string, ArgumentDescription> element : _map) {
         help
             << "    " << element.second.name << getValueHelp(element.second.type)
-            << " -> " << element.second.description << "\n";
+            << " -> " << element.second.description << std::endl;
     }
 
     return help.str();
