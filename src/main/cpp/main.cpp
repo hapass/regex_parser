@@ -7,7 +7,7 @@ int main(int argumentCount, char const* arguments[]) {
     RegexArgumentsParser argumentsParser(argumentCount, arguments);
 
     switch(argumentsParser.getState()) {
-        case Regex: {
+        case RegexParams: {
             std::cout << argumentsParser.getText() << std::endl;
             std::cout << argumentsParser.getRegex() << std::endl;
             break;

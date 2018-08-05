@@ -1,12 +1,12 @@
 #pragma once
 
 namespace regex_parser {
-    class Parser {
+    class Regex {
         private:
             bool _isParsed;
         public:
-            Parser();
-            ~Parser();
+            Regex();
+            ~Regex();
             bool parse();
     };
 }

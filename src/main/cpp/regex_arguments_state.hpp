@@ -1,5 +1,5 @@
 #pragma once
 
 namespace regex_parser {
-    enum RegexArgumentsState { Help, Regex };
+    enum RegexArgumentsState { Help, RegexParams };
 }

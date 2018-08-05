@@ -54,7 +54,7 @@ TEST(RegexArgumentsParser, get_text_and_regex_gets_values_if_parser_is_in_correc
     char const* arguments[] = { "-r", "regex", "-v", "value" };
     RegexArgumentsParser argumentsParser(4, arguments);
 
-    EXPECT_EQ(argumentsParser.getState(), Regex);
-    EXPECT_EQ(argumentsParser.getText(), "value");
+    EXPECT_EQ(argumentsParser.getState(), RegexParams);
+    EXPECT_EQ(argumentsParser.getText(), "valu");
     EXPECT_EQ(argumentsParser.getRegex(), "regex");
 }

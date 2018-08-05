@@ -37,7 +37,7 @@ RegexArgumentsState RegexArgumentsParser::getState() {
     if(_argumentsParser->getArgumentCount() == 2 &&
         _argumentsParser->hasArgument(VALUE_ARGUMENT) &&
         _argumentsParser->hasArgument(REGEX_ARGUMENT)) {
-        return Regex;
+        return RegexParams;
     }
 
     return Help;
@@ -48,7 +48,7 @@ std::string RegexArgumentsParser::getHelp() {
 }
 
 std::string RegexArgumentsParser::getRegex() {
-    if(getState() != Regex) {
+    if(getState() != RegexParams) {
         throw IllegalStateException(REGEX_STATE_EXCEPTION);
     }
 
@@ -56,7 +56,7 @@ std::string RegexArgumentsParser::getRegex() {
 }
 
 std::string RegexArgumentsParser::getText() {
-    if(getState() != Regex) {
+    if(getState() != RegexParams) {
         throw IllegalStateException(REGEX_STATE_EXCEPTION);
     }
 

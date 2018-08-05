@@ -2,13 +2,13 @@
 
 #include <string.h>
 #include "gtest/gtest.h"
-#include "parser.hpp"
+#include "regex.hpp"
 
 using namespace regex_parser;
 
-TEST(Parser, parse) {
+TEST(Regex, parse) {
     bool result = false;
-    auto parser = std::make_unique<Parser>();
+    auto parser = std::make_unique<Regex>();
     result = parser->parse();
     EXPECT_EQ(result, true);
 }
