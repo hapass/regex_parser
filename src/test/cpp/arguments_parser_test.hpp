@@ -55,14 +55,7 @@ TEST(ArgumentsParser, get_flag_value_throws_argument_exception) {
     char const* arguments[] = { "flag" };
     parser->parse(1, arguments);
 
-    bool isExceptionThrown = false;
-    try {
-        parser->getArgumentValue("flag");
-    } catch(std::invalid_argument e) {
-        isExceptionThrown = true;
-    }
-
-    EXPECT_EQ(isExceptionThrown, true);
+    EXPECT_THROW(parser->getArgumentValue("flag"), std::invalid_argument);
 }
 
 TEST(ArgumentsParser, has_argument_returns_true_if_has_argument) {
@@ -89,14 +82,7 @@ TEST(ArgumentsParser, get_argument_throws_exception_if_no_such_argument_configur
     char const* arguments[] = { "flag" };
     parser->parse(1, arguments);
 
-    bool isExceptionThrown = false;
-    try {
-        parser->getArgumentValue("notConfiguredFlag");
-    } catch(std::invalid_argument e) {
-        isExceptionThrown = true;
-    }
-
-    EXPECT_EQ(isExceptionThrown, true);
+    EXPECT_THROW(parser->getArgumentValue("notConfiguredFlag"), std::invalid_argument);
 }
 
 TEST(ArgumentsParser, get_string_value_returns_value) {

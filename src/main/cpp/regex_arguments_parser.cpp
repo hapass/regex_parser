@@ -1,10 +1,12 @@
 #include "regex_arguments_parser.hpp"
+#include "illegal_state_exception.hpp"
 
 using namespace regex_parser;
 
 const std::string RegexArgumentsParser::HELP_ARGUMENT = "-h";
 const std::string RegexArgumentsParser::REGEX_ARGUMENT = "-r";
 const std::string RegexArgumentsParser::VALUE_ARGUMENT = "-v";
+const std::string RegexArgumentsParser::REGEX_STATE_EXCEPTION = "You should pass exactly two parameters (text and regex) to get to the right state.";
 
 RegexArgumentsParser::RegexArgumentsParser(int argumentCount, char const* arguments[]) {
     ArgumentDescription helpDescription;
@@ -46,16 +48,16 @@ std::string RegexArgumentsParser::getHelp() {
 }
 
 std::string RegexArgumentsParser::getRegex() {
-    if(!_argumentsParser->hasArgument(REGEX_ARGUMENT)) {
-        return "";
+    if(getState() != Regex) {
+        throw IllegalStateException(REGEX_STATE_EXCEPTION);
     }
 
     return _argumentsParser->getArgumentValue(REGEX_ARGUMENT);
 }
 
 std::string RegexArgumentsParser::getText() {
-    if(!_argumentsParser->hasArgument(VALUE_ARGUMENT)) {
-        return "";
+    if(getState() != Regex) {
+        throw IllegalStateException(REGEX_STATE_EXCEPTION);
     }
 
     return _argumentsParser->getArgumentValue(VALUE_ARGUMENT);

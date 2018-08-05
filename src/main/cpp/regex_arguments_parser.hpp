@@ -11,6 +11,7 @@ namespace regex_parser {
             static const std::string HELP_ARGUMENT;
             static const std::string REGEX_ARGUMENT;
             static const std::string VALUE_ARGUMENT;
+            static const std::string REGEX_STATE_EXCEPTION;
 
             RegexArgumentsParser(int argumentCount, char const* arguments[]);
 
