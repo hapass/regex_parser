@@ -1,13 +1,14 @@
 #include "regex_lexer.hpp"
+#include "token.hpp"
 
 using namespace regex_parser;
 
-RegexLexer::RegexLexer(std::string expression) {
+std::vector<Token> RegexLexer::scan(std::string expression) {
+    std::vector<Token> vec;
 
-}
+    for(char& character : expression) {
+        vec.push_back(Token(character));
+    }
 
-std::vector<std::string> RegexLexer::scan() {
-    std::vector<std::string> vec;
-    vec.push_back(".");
     return vec;
 }

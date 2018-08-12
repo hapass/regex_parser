@@ -17,6 +17,7 @@ add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src" "${CMAKE_BINARY_DIR}/googl
 #executable
 add_library(regex_parser_lib
     src/main/cpp/regex.cpp
+    src/main/cpp/token.cpp
     src/main/cpp/arguments_parser.cpp
     src/main/cpp/regex_arguments_parser.cpp
     src/main/cpp/regex_lexer.cpp

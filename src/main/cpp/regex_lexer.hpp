@@ -1,13 +1,11 @@
 #pragma once
 
-#include <string>
 #include <vector>
+#include "token.hpp"
 
 namespace regex_parser {
     class RegexLexer {
         public:
-            RegexLexer(std::string expression);
-
-            std::vector<std::string> scan();
+            std::vector<Token> scan(std::string expression);
     };
 }
